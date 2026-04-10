@@ -1,0 +1,87 @@
+13:44:59 [INFO] ===== Running all experiments (run dir: runs/260407_134459) =====
+13:44:59 [INFO] === Model-based agent ===
+13:44:59 [INFO] Training world model...
+13:44:59 [INFO] Collected 6925 transitions from real environment
+13:45:00 [INFO] WM Epoch 1/20 | Train Loss: 0.018898 | Val Loss: 0.000484
+13:45:00 [INFO] WM Epoch 2/20 | Train Loss: 0.000263 | Val Loss: 0.000153
+13:45:00 [INFO] WM Epoch 3/20 | Train Loss: 0.000122 | Val Loss: 0.000095
+13:45:00 [INFO] WM Epoch 4/20 | Train Loss: 0.000082 | Val Loss: 0.000075
+13:45:00 [INFO] WM Epoch 5/20 | Train Loss: 0.000062 | Val Loss: 0.000059
+13:45:00 [INFO] WM Epoch 6/20 | Train Loss: 0.000055 | Val Loss: 0.000056
+13:45:00 [INFO] WM Epoch 7/20 | Train Loss: 0.000044 | Val Loss: 0.000039
+13:45:00 [INFO] WM Epoch 8/20 | Train Loss: 0.000039 | Val Loss: 0.000041
+13:45:00 [INFO] WM Epoch 9/20 | Train Loss: 0.000037 | Val Loss: 0.000037
+13:45:00 [INFO] WM Epoch 10/20 | Train Loss: 0.000032 | Val Loss: 0.000035
+13:45:00 [INFO] WM Epoch 11/20 | Train Loss: 0.000042 | Val Loss: 0.000031
+13:45:01 [INFO] WM Epoch 12/20 | Train Loss: 0.000036 | Val Loss: 0.000024
+13:45:01 [INFO] WM Epoch 13/20 | Train Loss: 0.000032 | Val Loss: 0.000040
+13:45:01 [INFO] WM Epoch 14/20 | Train Loss: 0.000026 | Val Loss: 0.000023
+13:45:01 [INFO] WM Epoch 15/20 | Train Loss: 0.000023 | Val Loss: 0.000028
+13:45:01 [INFO] WM Epoch 16/20 | Train Loss: 0.000028 | Val Loss: 0.000022
+13:45:01 [INFO] WM Epoch 17/20 | Train Loss: 0.000027 | Val Loss: 0.000077
+13:45:01 [INFO] WM Epoch 18/20 | Train Loss: 0.000027 | Val Loss: 0.000026
+13:45:01 [INFO] WM Epoch 19/20 | Train Loss: 0.000020 | Val Loss: 0.000032
+13:45:01 [INFO] WM Epoch 20/20 | Train Loss: 0.000020 | Val Loss: 0.000015
+13:45:01 [INFO] World model val metrics — State MSE: 0.000012 | Reward MSE: 0.000025
+13:45:01 [INFO] World model saved to runs/260407_134459/models/wm.pt
+13:45:01 [INFO] World model saved to runs/260407_134459/models/wm.pt
+13:45:01 [INFO] Training model-based agent on world model (standard)
+13:45:01 [INFO] Agent Episode 0/500 - Reward: 31.00
+13:45:02 [INFO] Agent Episode 50/500 - Reward: 54.04
+13:45:07 [INFO] Agent Episode 100/500 - Reward: 205.40
+13:45:11 [INFO] Agent Episode 150/500 - Reward: 234.85
+13:45:17 [INFO] Agent Episode 200/500 - Reward: 240.32
+13:45:21 [INFO] Agent Episode 250/500 - Reward: 91.56
+13:45:25 [INFO] Agent Episode 300/500 - Reward: 189.16
+13:45:31 [INFO] Agent Episode 350/500 - Reward: 145.96
+13:45:37 [INFO] Agent Episode 400/500 - Reward: 207.92
+13:45:41 [INFO] Agent Episode 450/500 - Reward: 48.28
+13:45:46 [INFO] model-based agent saved to runs/260407_134459/models/agent_modelbased.pt | real interactions: 6925
+13:45:46 [INFO] Evaluation (15 eps): mean=16.7, std=1.9, max=19.0
+13:45:46 [INFO] New best agent saved with avg reward: 16.7 (previous best: -inf)
+13:45:46 [INFO] === Model-free agent ===
+13:45:46 [INFO] Training model-free agent on real CartPole environment
+13:45:46 [INFO] Agent Episode 0/500 - Reward: 19.00
+13:45:46 [INFO] Agent Episode 50/500 - Reward: 73.00
+13:45:54 [INFO] Agent Episode 100/500 - Reward: 206.00
+13:46:01 [INFO] Agent Episode 150/500 - Reward: 249.00
+13:46:12 [INFO] Agent Episode 200/500 - Reward: 30.00
+13:46:17 [INFO] Agent Episode 250/500 - Reward: 300.00
+13:46:26 [INFO] Agent Episode 300/500 - Reward: 356.00
+13:46:37 [INFO] Agent Episode 350/500 - Reward: 335.00
+13:46:43 [INFO] Agent Episode 400/500 - Reward: 201.00
+13:46:48 [INFO] Agent Episode 450/500 - Reward: 200.00
+13:46:54 [INFO] model-free agent saved to runs/260407_134459/models/agent_modelfree.pt | real interactions: 119149
+13:46:54 [INFO] Evaluation (15 eps): mean=233.3, std=3.5, max=240.0
+13:46:54 [INFO] === Random agent ===
+13:46:54 [INFO] Evaluation (15 eps): mean=23.1, std=8.3, max=42.0
+13:46:54 [INFO] Results — Model-based: 16.7 (real interactions: 6925) | Model-free: 233.3 (real interactions: 119149) | Random: 23.1 (real interactions: 0)
+13:46:54 [INFO] ===== Generating plots =====
+13:46:54 [INFO] Rollout: 36 steps | Step 1 MSE: 0.000001 | Final MSE: 0.002451
+13:46:54 [INFO] Rollout: 39 steps | Step 1 MSE: 0.000005 | Final MSE: 0.006165
+13:46:54 [INFO] Rollout: 23 steps | Step 1 MSE: 0.000016 | Final MSE: 0.000411
+13:46:54 [INFO] Rollout: 20 steps | Step 1 MSE: 0.000005 | Final MSE: 0.000402
+13:46:54 [INFO] Rollout: 26 steps | Step 1 MSE: 0.000001 | Final MSE: 0.002459
+13:46:54 [INFO] Rollout: 27 steps | Step 1 MSE: 0.000002 | Final MSE: 0.001895
+13:46:54 [INFO] Rollout: 28 steps | Step 1 MSE: 0.000002 | Final MSE: 0.001019
+13:46:54 [INFO] Rollout: 25 steps | Step 1 MSE: 0.000000 | Final MSE: 0.002347
+13:46:54 [INFO] Rollout: 25 steps | Step 1 MSE: 0.000001 | Final MSE: 0.001241
+13:46:54 [INFO] Rollout: 13 steps | Step 1 MSE: 0.000005 | Final MSE: 0.001046
+13:46:54 [INFO] Rollout: 14 steps | Step 1 MSE: 0.000001 | Final MSE: 0.000066
+13:46:54 [INFO] Rollout: 24 steps | Step 1 MSE: 0.000001 | Final MSE: 0.001352
+13:46:54 [INFO] Rollout: 46 steps | Step 1 MSE: 0.000003 | Final MSE: 0.000826
+13:46:54 [INFO] Rollout: 16 steps | Step 1 MSE: 0.000003 | Final MSE: 0.000186
+13:46:54 [INFO] Rollout: 10 steps | Step 1 MSE: 0.000002 | Final MSE: 0.000235
+13:46:54 [INFO] Rollout: 29 steps | Step 1 MSE: 0.000003 | Final MSE: 0.001172
+13:46:54 [INFO] Rollout: 28 steps | Step 1 MSE: 0.000002 | Final MSE: 0.002246
+13:46:54 [INFO] Rollout: 21 steps | Step 1 MSE: 0.000001 | Final MSE: 0.000443
+13:46:54 [INFO] Rollout: 20 steps | Step 1 MSE: 0.000001 | Final MSE: 0.000514
+13:46:54 [INFO] Rollout: 9 steps | Step 1 MSE: 0.000008 | Final MSE: 0.000270
+13:46:54 [INFO] ===== Experiment complete =====
+13:46:54 [INFO] Agent               Mean      Std      Max
+13:46:54 [INFO] --------------- -------- -------- --------
+13:46:54 [INFO] Model-based         16.7      1.9     19.0
+13:46:54 [INFO] Model-free         233.3      3.5    240.0
+13:46:54 [INFO] Random              23.1      8.3     42.0
+13:46:54 [INFO] Summary table saved to runs/260407_134459/summary.csv
+13:46:54 [INFO] All artifacts saved to runs/260407_134459/

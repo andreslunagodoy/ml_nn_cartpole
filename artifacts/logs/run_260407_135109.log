@@ -1,0 +1,56 @@
+13:51:10 [INFO] === Model-based agent ===
+13:51:10 [INFO] Training world model...
+13:51:10 [INFO] Collected 7060 transitions from real environment
+13:51:10 [INFO] WM Epoch 1/20 | Train Loss: 0.016810 | Val Loss: 0.000288
+13:51:10 [INFO] WM Epoch 2/20 | Train Loss: 0.000179 | Val Loss: 0.000110
+13:51:11 [INFO] WM Epoch 3/20 | Train Loss: 0.000094 | Val Loss: 0.000065
+13:51:11 [INFO] WM Epoch 4/20 | Train Loss: 0.000065 | Val Loss: 0.000052
+13:51:11 [INFO] WM Epoch 5/20 | Train Loss: 0.000048 | Val Loss: 0.000038
+13:51:11 [INFO] WM Epoch 6/20 | Train Loss: 0.000043 | Val Loss: 0.000043
+13:51:11 [INFO] WM Epoch 7/20 | Train Loss: 0.000036 | Val Loss: 0.000041
+13:51:11 [INFO] WM Epoch 8/20 | Train Loss: 0.000031 | Val Loss: 0.000034
+13:51:11 [INFO] WM Epoch 9/20 | Train Loss: 0.000029 | Val Loss: 0.000027
+13:51:11 [INFO] WM Epoch 10/20 | Train Loss: 0.000027 | Val Loss: 0.000025
+13:51:11 [INFO] WM Epoch 11/20 | Train Loss: 0.000025 | Val Loss: 0.000030
+13:51:11 [INFO] WM Epoch 12/20 | Train Loss: 0.000027 | Val Loss: 0.000035
+13:51:11 [INFO] WM Epoch 13/20 | Train Loss: 0.000024 | Val Loss: 0.000025
+13:51:11 [INFO] WM Epoch 14/20 | Train Loss: 0.000024 | Val Loss: 0.000021
+13:51:11 [INFO] WM Epoch 15/20 | Train Loss: 0.000048 | Val Loss: 0.000021
+13:51:11 [INFO] WM Epoch 16/20 | Train Loss: 0.000028 | Val Loss: 0.000031
+13:51:11 [INFO] WM Epoch 17/20 | Train Loss: 0.000018 | Val Loss: 0.000023
+13:51:11 [INFO] WM Epoch 18/20 | Train Loss: 0.000017 | Val Loss: 0.000027
+13:51:11 [INFO] WM Epoch 19/20 | Train Loss: 0.000019 | Val Loss: 0.000023
+13:51:11 [INFO] WM Epoch 20/20 | Train Loss: 0.000019 | Val Loss: 0.000041
+13:51:11 [INFO] World model val metrics — State MSE: 0.000039 | Reward MSE: 0.000021
+13:51:11 [INFO] World model saved to artifacts/models/wm.pt
+13:51:11 [INFO] World model saved to artifacts/models/wm.pt
+13:51:11 [INFO] Training model-based agent on world model (standard)
+13:51:11 [INFO] Agent Episode 0/500 - Reward: 10.99
+13:51:12 [INFO] Agent Episode 50/500 - Reward: 111.07
+13:51:18 [INFO] Agent Episode 100/500 - Reward: 206.64
+13:51:23 [INFO] Agent Episode 150/500 - Reward: 220.33
+13:51:27 [INFO] Agent Episode 200/500 - Reward: 142.95
+13:51:32 [INFO] Agent Episode 250/500 - Reward: 193.85
+13:51:38 [INFO] Agent Episode 300/500 - Reward: 219.51
+13:51:44 [INFO] Agent Episode 350/500 - Reward: 206.37
+13:51:49 [INFO] Agent Episode 400/500 - Reward: 213.52
+13:51:54 [INFO] Agent Episode 450/500 - Reward: 138.18
+13:51:59 [INFO] model-based agent saved to artifacts/models/agent_modelbased.pt | real interactions: 7060
+13:51:59 [INFO] Evaluation (15 eps): mean=14.9, std=2.5, max=20.0
+13:51:59 [INFO] === Model-free agent ===
+13:51:59 [INFO] Training model-free agent on real CartPole environment
+13:51:59 [INFO] Agent Episode 0/500 - Reward: 24.00
+13:52:00 [INFO] Agent Episode 50/500 - Reward: 27.00
+13:52:04 [INFO] Agent Episode 100/500 - Reward: 163.00
+13:52:09 [INFO] Agent Episode 150/500 - Reward: 129.00
+13:52:13 [INFO] Agent Episode 200/500 - Reward: 129.00
+13:52:16 [INFO] Agent Episode 250/500 - Reward: 129.00
+13:52:20 [INFO] Agent Episode 300/500 - Reward: 134.00
+13:52:24 [INFO] Agent Episode 350/500 - Reward: 97.00
+13:52:27 [INFO] Agent Episode 400/500 - Reward: 130.00
+13:52:32 [INFO] Agent Episode 450/500 - Reward: 135.00
+13:52:36 [INFO] model-free agent saved to artifacts/models/agent_modelfree.pt | real interactions: 62301
+13:52:36 [INFO] Evaluation (15 eps): mean=132.7, std=4.6, max=141.0
+13:52:36 [INFO] === Random agent ===
+13:52:36 [INFO] Evaluation (15 eps): mean=23.4, std=8.4, max=38.0
+13:52:36 [INFO] Results — Model-based: 14.9 (real interactions: 7060) | Model-free: 132.7 (real interactions: 62301) | Random: 23.4 (real interactions: 0)

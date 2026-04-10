@@ -1,0 +1,4 @@
+agent,mean,std,max
+Model-based,16.7,1.9,19.0
+Model-free,233.3,3.5,240.0
+Random,23.1,8.3,42.0
