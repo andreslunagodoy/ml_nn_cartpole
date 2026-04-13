@@ -104,13 +104,25 @@ def main(retrain_agent=RETRAIN_AGENT, retrain_wm=RETRAIN_WM,
     rand_agent = RandomAgent()
     rand_results = evaluate_agent(rand_agent, env_name='CartPole-v1', episodes=50, render=False)
 
+    # 4. Best saved agent
+    best_results = None
+    if os.path.exists(BEST_AGENT_PATH):
+        logger.info("=== Best saved agent ===")
+        best_agent = DQNAgent(STATE_DIM, ACTION_DIM)
+        best_agent.load(BEST_AGENT_PATH)
+        best_results = evaluate_agent(best_agent, env_name='CartPole-v1', episodes=50, render=False)
+    else:
+        logger.info("No best agent found, skipping")
+
     # Summary
     logger.info(
         f"Results — Model-based: {mb_results['mean']:.1f} (real interactions: {mb_interactions}) "
         f"| Model-free: {mf_results['mean']:.1f} (real interactions: {mf_interactions}) "
         f"| Random: {rand_results['mean']:.1f} (real interactions: 0)"
     )
-    return mb_results, mf_results, rand_results
+    if best_results:
+        logger.info(f"         Best saved: {best_results['mean']:.1f}")
+    return mb_results, mf_results, rand_results, best_results
 
 
 if __name__ == "__main__":

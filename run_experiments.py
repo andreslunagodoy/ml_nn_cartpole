@@ -42,7 +42,7 @@ def run():
 
     # 1. Train and evaluate all agents
     logger.info(f"===== Running all experiments (run dir: {run_dir}) =====")
-    mb_results, mf_results, rand_results = main(
+    mb_results, mf_results, rand_results, best_results = main(
         retrain_agent=True,
         retrain_wm=True,
         retrain_modelfree=True,
@@ -66,6 +66,8 @@ def run():
         "Model-free": mf_results,
         "Random": rand_results,
     }
+    if best_results:
+        results["Best saved"] = best_results
     log_summary_table(results)
     save_summary(results, run_dir)
     logger.info(f"All artifacts saved to {run_dir}/")

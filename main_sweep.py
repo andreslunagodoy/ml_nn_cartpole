@@ -12,7 +12,7 @@ def sweep():
 
     for w in REWARD_WEIGHTS:
         print(f"\n===== reward_weight={w} =====")
-        mb_results, _, _ = main(
+        mb_results, _, _, _ = main(
             retrain_agent=True,
             retrain_wm=True,
             retrain_modelfree=False,
