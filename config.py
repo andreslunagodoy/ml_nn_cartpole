@@ -1,6 +1,15 @@
 import os
 
-USE_CC = False
+# CartPole environment dimensions
+STATE_DIM = 4
+ACTION_DIM = 2
+
+# World model training
+REWARD_WEIGHT = 0.1
+
+# CartPole termination thresholds
+CART_POS_LIMIT = 2.4
+POLE_ANGLE_LIMIT = 0.2094  # ~12 degrees
 
 # Model-based agent
 RETRAIN_AGENT = False

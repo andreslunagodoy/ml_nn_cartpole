@@ -28,7 +28,7 @@ if st.sidebar.button("Run Evaluation"):
         if not os.path.exists(path):
             st.sidebar.error(f"No saved model at {path}. Train first.")
             st.stop()
-        agent = DQNAgent(4, 2)
+        agent = DQNAgent(STATE_DIM, ACTION_DIM)
         agent.load(path)
 
     with st.spinner(f"Evaluating {agent_choice} agent..."):

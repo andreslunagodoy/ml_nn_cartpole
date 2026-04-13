@@ -18,6 +18,9 @@ class BaseAgent(ABC):
     def update_target(self):
         pass
 
+    def decay_epsilon(self):
+        pass
+
     @abstractmethod
     def save(self, path):
         pass

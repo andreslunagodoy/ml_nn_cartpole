@@ -2,39 +2,23 @@
 import torch
 import numpy as np
 from models.wm import WorldModel
-from models.wm_cc import WorldModelCC
 from utils.preprocessing import normalize_state
+from config import STATE_DIM, ACTION_DIM, CART_POS_LIMIT, POLE_ANGLE_LIMIT
 
-
-MODEL_CLASSES = {
-    "standard": WorldModel,
-    "cc": WorldModelCC,
-}
-
-DEFAULTS = {
-    "standard": {
-        "model_path": "artifacts/models/wm.pt",
-        "state_mean_path": "artifacts/models/state_mean.npy",
-        "state_std_path": "artifacts/models/state_std.npy",
-    },
-    "cc": {
-        "model_path": "artifacts/models/wm_cc.pt",
-        "state_mean_path": "artifacts/models/state_mean_cc.npy",
-        "state_std_path": "artifacts/models/state_std_cc.npy",
-    },
-}
+DEFAULT_MODEL_PATH = "artifacts/models/wm.pt"
+DEFAULT_STATE_MEAN_PATH = "artifacts/models/state_mean.npy"
+DEFAULT_STATE_STD_PATH = "artifacts/models/state_std.npy"
 
 
 class WorldModelEnv:
-    def __init__(self, variant="standard", model_path=None, state_mean_path=None,
+    def __init__(self, model_path=None, state_mean_path=None,
                  state_std_path=None, device="cpu", max_steps=200):
-        defaults = DEFAULTS[variant]
-        model_path = model_path or defaults["model_path"]
-        state_mean_path = state_mean_path or defaults["state_mean_path"]
-        state_std_path = state_std_path or defaults["state_std_path"]
+        model_path = model_path or DEFAULT_MODEL_PATH
+        state_mean_path = state_mean_path or DEFAULT_STATE_MEAN_PATH
+        state_std_path = state_std_path or DEFAULT_STATE_STD_PATH
 
         self.device = device
-        self.model = MODEL_CLASSES[variant]()
+        self.model = WorldModel()
         self.model.load_state_dict(torch.load(model_path, map_location=device))
         self.model.to(device).eval()
 
@@ -53,26 +37,27 @@ class WorldModelEnv:
 
     def step(self, action):
         self.step_count += 1
-        action_oh = np.eye(2)[action]
+        action_oh = np.eye(ACTION_DIM)[action]
         state_action_np = np.concatenate([self.state, action_oh])
         state_action = torch.tensor(state_action_np, dtype=torch.float32, device=self.device).unsqueeze(0)
 
         with torch.no_grad():
             pred = self.model(state_action)
 
-        if isinstance(pred, tuple):
-            delta = pred[0].cpu().numpy().squeeze()
-            reward = pred[1][0, 0].item()
-        else:
-            delta = pred[:, :4].cpu().numpy().squeeze()
-            reward = pred[0, 4].item()
+        assert pred.shape == (1, STATE_DIM + 1), f"Unexpected model output shape: {pred.shape}"
+        delta = pred[0, :STATE_DIM].cpu().numpy()
+        reward = pred[0, STATE_DIM].item()
 
         next_state = self.state + delta
         self.state = next_state
 
         raw = next_state * self.state_std + self.state_mean
+        if not np.isfinite(raw).all():
+            return next_state.copy(), 0.0, True, {}
         cart_pos, _, pole_angle, _ = raw
-        fell = abs(cart_pos) > 2.4 or abs(pole_angle) > 0.2094
+        fell = abs(cart_pos) > CART_POS_LIMIT or abs(pole_angle) > POLE_ANGLE_LIMIT
+        if fell:
+            reward = 0.0
         done = fell or self.step_count >= self.max_steps
 
         return next_state.copy(), reward, done, {}

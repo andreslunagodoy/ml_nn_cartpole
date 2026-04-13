@@ -11,29 +11,18 @@ from utils.preprocessing import (
     compute_deltas
 )
 from models.wm import WorldModel
-from models.wm_cc import WorldModelCC
 from training.train_wm import train, evaluate
 from utils.evaluation import multi_step_rollout
 from utils.logger import logger
-
-# ----- Configuration -----
-USE_CC = False
+from config import REWARD_WEIGHT
 
 
-def train_world_model(use_cc=False, reward_weight=None, model_path=None,
+def train_world_model(reward_weight=None, model_path=None,
                       mean_path=None, std_path=None, evaluate_rollout=False):
-    if use_cc:
-        ModelClass = WorldModelCC
-        model_path = model_path or "artifacts/models/wm_cc.pt"
-        mean_path = mean_path or "artifacts/models/state_mean_cc.npy"
-        std_path = std_path or "artifacts/models/state_std_cc.npy"
-        reward_weight = reward_weight if reward_weight is not None else 1.0
-    else:
-        ModelClass = WorldModel
-        model_path = model_path or "artifacts/models/wm.pt"
-        mean_path = mean_path or "artifacts/models/state_mean.npy"
-        std_path = std_path or "artifacts/models/state_std.npy"
-        reward_weight = reward_weight if reward_weight is not None else 0.1
+    model_path = model_path or "artifacts/models/wm.pt"
+    mean_path = mean_path or "artifacts/models/state_mean.npy"
+    std_path = std_path or "artifacts/models/state_std.npy"
+    reward_weight = reward_weight if reward_weight is not None else REWARD_WEIGHT
 
     # 1. Collect data
     data, num_transitions = collect_data(num_episodes=300)
@@ -55,7 +44,7 @@ def train_world_model(use_cc=False, reward_weight=None, model_path=None,
 
     # 5. Train/val split
     X_train, X_val, d_train, d_val, r_train, r_val = train_test_split(
-        inputs, deltas, rewards, test_size=0.2
+        inputs, deltas, rewards, test_size=0.2, stratify=actions
     )
 
     # 6. Convert to tensors
@@ -67,7 +56,7 @@ def train_world_model(use_cc=False, reward_weight=None, model_path=None,
     r_val = torch.tensor(r_val, dtype=torch.float32)
 
     # 7. Model
-    model = ModelClass()
+    model = WorldModel()
 
     # 8. Train
     train(model, X_train, d_train, r_train, X_val, d_val, r_val, reward_weight=reward_weight)
@@ -89,4 +78,4 @@ def train_world_model(use_cc=False, reward_weight=None, model_path=None,
 
 
 if __name__ == "__main__":
-    train_world_model(use_cc=USE_CC)
+    train_world_model()

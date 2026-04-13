@@ -29,6 +29,8 @@ def train_agent(env, agent, num_episodes=500, target_update_freq=10, gym_env=Fal
             total_reward += reward
             total_steps += 1
 
+        agent.decay_epsilon()
+
         if ep % target_update_freq == 0:
             agent.update_target()
 

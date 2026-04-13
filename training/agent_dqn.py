@@ -6,6 +6,7 @@ import random
 import numpy as np
 from collections import deque
 from training.agent_base import BaseAgent
+from config import ACTION_DIM
 
 class DQN(nn.Module):
     def __init__(self, state_dim, action_dim):
@@ -32,12 +33,12 @@ class DQNAgent(BaseAgent):
         self.epsilon = epsilon
         self.epsilon_decay = epsilon_decay
         self.epsilon_min = epsilon_min
-        self.memory = deque(maxlen=5000)
+        self.memory = deque(maxlen=50000)
         self.batch_size = 64
     
     def select_action(self, state):
         if np.random.rand() < self.epsilon:
-            return random.randint(0, 1)  # CartPole has 2 actions
+            return random.randint(0, ACTION_DIM - 1)
         state_tensor = torch.tensor(state, dtype=torch.float32, device=self.device).unsqueeze(0)
         q_values = self.model(state_tensor)
         return torch.argmax(q_values).item()
@@ -57,7 +58,7 @@ class DQNAgent(BaseAgent):
         dones = torch.tensor(np.array(dones), dtype=torch.float32, device=self.device).unsqueeze(1)
         
         q_values = self.model(states).gather(1, actions)
-        next_q_values = self.target_model(next_states).max(1)[0].unsqueeze(1)
+        next_q_values = self.target_model(next_states).max(1)[0].unsqueeze(1).detach()
         target = rewards + self.gamma * next_q_values * (1 - dones)
         
         loss = nn.MSELoss()(q_values, target)
@@ -65,9 +66,10 @@ class DQNAgent(BaseAgent):
         loss.backward()
         self.optimizer.step()
         
+    def decay_epsilon(self):
         if self.epsilon > self.epsilon_min:
             self.epsilon *= self.epsilon_decay
-    
+
     def update_target(self):
         self.target_model.load_state_dict(self.model.state_dict())
 

@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store
+
+# Trained models and experiment outputs (reproducible)
+artifacts/models/
+artifacts/best/
+artifacts/logs/
+runs/

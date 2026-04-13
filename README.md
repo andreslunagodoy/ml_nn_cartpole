@@ -9,10 +9,6 @@ This project explores **model-based reinforcement learning** (MBRL) by training 
 3. **Agent training** -- train a DQN agent inside the learned world model instead of the real environment
 4. **Evaluation** -- evaluate all agents on the real CartPole environment and compare
 
-Two world model variants are available:
-- **Standard** -- single MLP with shared output for state deltas and reward
-- **CC (custom critic)** -- shared encoder with separate heads for state prediction and reward prediction
-
 Three agents are compared:
 - **Model-based** -- DQN trained inside the world model
 - **Model-free** -- DQN trained directly on the real environment (baseline)
@@ -43,8 +39,7 @@ Three agents are compared:
 │   ├── evaluate_agent.py   # Agent evaluation
 │   └── env_wm.py           # World model wrapped as a Gym-like env
 ├── models/
-│   ├── wm.py               # Standard world model architecture
-│   └── wm_cc.py            # Custom critic world model architecture
+│   └── wm.py               # World model architecture (MLP)
 ├── utils/
 │   ├── data_collection.py  # Random policy data collection
 │   ├── preprocessing.py    # Normalization, one-hot encoding, deltas
@@ -145,5 +140,4 @@ World model prediction error grows exponentially over rollout steps:
 - The world model is a simple MLP predicting one-step deltas; more sophisticated architectures (ensemble models, latent dynamics) could reduce compounding error
 - The agent trains on open-loop rollouts from the world model, amplifying model inaccuracies; Dyna-style approaches that mix real and simulated data could help
 - CartPole is a simple environment; the sim-to-real gap would likely be more pronounced in higher-dimensional tasks
-- No early stopping or learning rate scheduling is used for either the world model or the agent
-- Evaluation variance is high due to DQN instability; more episodes or multiple seeds would give more reliable estimates
+- Multiple random seeds would give more reliable evaluation estimates

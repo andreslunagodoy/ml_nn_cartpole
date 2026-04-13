@@ -1,4 +1,5 @@
 import numpy as np
+from config import ACTION_DIM
 
 def process_data(data):
     states, actions, next_states, rewards = [], [], [], []
@@ -16,7 +17,7 @@ def process_data(data):
         np.array(rewards, dtype=np.float32),
     )
 
-def one_hot(actions, num_actions=2):
+def one_hot(actions, num_actions=ACTION_DIM):
     return np.eye(num_actions)[actions]
 
 def normalize_states(states, next_states):

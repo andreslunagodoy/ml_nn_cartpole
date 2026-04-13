@@ -32,33 +32,31 @@ def train_or_load_agent(name, retrain, save_path, load_path, train_fn):
         logger.info(f"{name} agent saved to {save_path} | real interactions: {real_interactions}")
     else:
         logger.info(f"Loading {name} agent from {load_path}")
-        agent = DQNAgent(4, 2)
+        agent = DQNAgent(STATE_DIM, ACTION_DIM)
         agent.load(load_path)
         real_interactions = 0
     return agent, need_training, real_interactions
 
 
-def train_modelbased(use_cc, retrain_wm, model_path, mean_path, std_path, reward_weight, model_dir="artifacts/models"):
-    variant = "cc" if use_cc else "standard"
-    suffix = "_cc" if use_cc else ""
-    default_model_path = os.path.join(model_dir, "wm_cc.pt" if use_cc else "wm.pt")
+def train_modelbased(retrain_wm, model_path, mean_path, std_path, reward_weight, model_dir="artifacts/models"):
+    default_model_path = os.path.join(model_dir, "wm.pt")
     model_path = model_path or default_model_path
-    mean_path = mean_path or os.path.join(model_dir, f"state_mean{suffix}.npy")
-    std_path = std_path or os.path.join(model_dir, f"state_std{suffix}.npy")
+    mean_path = mean_path or os.path.join(model_dir, "state_mean.npy")
+    std_path = std_path or os.path.join(model_dir, "state_std.npy")
 
     real_interactions = 0
     if retrain_wm or not os.path.exists(model_path):
         logger.info("Training world model...")
         real_interactions = train_world_model(
-            use_cc=use_cc, reward_weight=reward_weight,
+            reward_weight=reward_weight,
             model_path=model_path, mean_path=mean_path,
             std_path=std_path)
         logger.info(f"World model saved to {model_path}")
 
-    env = WorldModelEnv(variant=variant, model_path=model_path,
+    env = WorldModelEnv(model_path=model_path,
                         state_mean_path=mean_path, state_std_path=std_path)
-    logger.info(f"Training model-based agent on world model ({variant})")
-    agent = DQNAgent(env.state_mean.shape[0], 2)
+    logger.info("Training model-based agent on world model")
+    agent = DQNAgent(env.state_mean.shape[0], ACTION_DIM)
     train_agent(env, agent, num_episodes=500, target_update_freq=10, gym_env=False, csv_name="agent_modelbased")
     return agent, real_interactions
 
@@ -72,7 +70,7 @@ def train_modelfree():
     return agent, real_interactions
 
 
-def main(use_cc=USE_CC, retrain_agent=RETRAIN_AGENT, retrain_wm=RETRAIN_WM,
+def main(retrain_agent=RETRAIN_AGENT, retrain_wm=RETRAIN_WM,
          retrain_modelfree=RETRAIN_MODELFREE,
          model_path=None, mean_path=None, std_path=None, reward_weight=None,
          model_dir="artifacts/models"):
@@ -86,9 +84,9 @@ def main(use_cc=USE_CC, retrain_agent=RETRAIN_AGENT, retrain_wm=RETRAIN_WM,
     mb_agent, mb_trained, mb_interactions = train_or_load_agent(
         "model-based", retrain_agent,
         mb_save, AGENT_MODELBASED_LOAD_PATH,
-        lambda: train_modelbased(use_cc, retrain_wm, model_path, mean_path, std_path, reward_weight, model_dir),
+        lambda: train_modelbased(retrain_wm, model_path, mean_path, std_path, reward_weight, model_dir),
     )
-    mb_results = evaluate_agent(mb_agent, env_name='CartPole-v1', episodes=15, render=False)
+    mb_results = evaluate_agent(mb_agent, env_name='CartPole-v1', episodes=50, render=False)
     if mb_trained:
         save_if_best(mb_agent, mb_results['mean'])
 
@@ -99,12 +97,12 @@ def main(use_cc=USE_CC, retrain_agent=RETRAIN_AGENT, retrain_wm=RETRAIN_WM,
         mf_save, AGENT_MODELFREE_LOAD_PATH,
         train_modelfree,
     )
-    mf_results = evaluate_agent(mf_agent, env_name='CartPole-v1', episodes=15, render=False)
+    mf_results = evaluate_agent(mf_agent, env_name='CartPole-v1', episodes=50, render=False)
 
     # 3. Random agent
     logger.info("=== Random agent ===")
     rand_agent = RandomAgent()
-    rand_results = evaluate_agent(rand_agent, env_name='CartPole-v1', episodes=15, render=False)
+    rand_results = evaluate_agent(rand_agent, env_name='CartPole-v1', episodes=50, render=False)
 
     # Summary
     logger.info(

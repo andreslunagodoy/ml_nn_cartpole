@@ -8,6 +8,7 @@ import gymnasium as gym
 import matplotlib.pyplot as plt
 
 from models.wm import WorldModel
+from config import STATE_DIM
 from utils.preprocessing import one_hot
 
 FIGURES_DIR = "artifacts/figures"
@@ -32,7 +33,7 @@ def collect_trajectory(model, mean, std, steps=50):
         input_vec = np.concatenate([state_pred, one_hot(action)])
         input_tensor = torch.tensor(input_vec, dtype=torch.float32)
         pred = model(input_tensor)
-        delta = pred[:4].detach().numpy()
+        delta = pred[:STATE_DIM].detach().numpy()
         state_pred = state_pred + delta
         pred_states.append(state_pred.copy())
 

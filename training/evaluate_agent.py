@@ -3,7 +3,7 @@ import gymnasium as gym
 import numpy as np
 from utils.logger import logger
 
-def evaluate_agent(agent, env_name='CartPole-v1', episodes=15, render=False, verbose=True):
+def evaluate_agent(agent, env_name='CartPole-v1', episodes=50, render=False, verbose=True):
     """
     Evaluate a trained agent in a Gym environment.
 

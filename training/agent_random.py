@@ -1,11 +1,11 @@
 import random
 from training.agent_base import BaseAgent
+from config import ACTION_DIM
 
 
 class RandomAgent(BaseAgent):
-    def __init__(self, action_dim=2):
+    def __init__(self, action_dim=ACTION_DIM):
         self.action_dim = action_dim
-        self.epsilon = 1.0
 
     def select_action(self, state):
         return random.randint(0, self.action_dim - 1)

@@ -2,6 +2,7 @@ import numpy as np
 import torch
 from utils.preprocessing import one_hot
 from utils.logger import logger
+from config import STATE_DIM
 
 
 def multi_step_rollout(env, model, mean, std, steps=50):
@@ -20,7 +21,7 @@ def multi_step_rollout(env, model, mean, std, steps=50):
 
         pred = model(input_tensor)
 
-        delta = pred[:4].detach().numpy()
+        delta = pred[:STATE_DIM].detach().numpy()
         state_pred = state_pred + delta
 
         next_state, _, done, _, _ = env.step(action)
