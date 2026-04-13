@@ -1,9 +1,0 @@
-14:18:10 [INFO] === Model-based agent ===
-14:18:10 [INFO] Loading model-based agent from artifacts/models/agent_modelbased.pt
-14:18:10 [INFO] Evaluation (15 eps): mean=12.8, std=1.6, max=15.0
-14:18:10 [INFO] === Model-free agent ===
-14:18:10 [INFO] Loading model-free agent from artifacts/models/agent_modelfree.pt
-14:18:10 [INFO] Evaluation (15 eps): mean=132.2, std=5.1, max=143.0
-14:18:10 [INFO] === Random agent ===
-14:18:10 [INFO] Evaluation (15 eps): mean=20.1, std=11.0, max=55.0
-14:18:10 [INFO] Results — Model-based: 12.8 (real interactions: 0) | Model-free: 132.2 (real interactions: 0) | Random: 20.1 (real interactions: 0)

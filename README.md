@@ -108,25 +108,25 @@ streamlit run app.py
 
 Training reward over episodes for model-based and model-free agents:
 
-![Learning Curves](figures/learning_curves.png)
+![Learning Curves](figures/example/learning_curves.png)
 
 ### Sample Efficiency
 
 Reward as a function of real environment interactions. The model-based agent uses ~7k real interactions (for data collection) vs ~70-100k for model-free:
 
-![Sample Efficiency](figures/sample_efficiency.png)
+![Sample Efficiency](figures/example/sample_efficiency.png)
 
 ### World Model Accuracy
 
 Predicted vs real trajectories across the 4 state dimensions. The world model tracks reality closely for the first ~10 steps, then diverges:
 
-![Trajectories](figures/trajectories.png)
+![Trajectories](figures/example/trajectories.png)
 
 ### Compounding Error
 
 World model prediction error grows exponentially over rollout steps:
 
-![WM Error](figures/wm_error.png)
+![WM Error](figures/example/wm_error.png)
 
 ## Key Findings
 
