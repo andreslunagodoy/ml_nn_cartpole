@@ -37,6 +37,7 @@ def list_runs():
     return runs
 
 
+@st.cache_data
 def load_summary(run_dir):
     path = os.path.join(run_dir, "summary.csv")
     if os.path.exists(path):
@@ -49,6 +50,7 @@ def latest_csv(pattern, logs_dir):
     return files[-1] if files else None
 
 
+@st.cache_data
 def load_training_csv(pattern, logs_dir):
     path = latest_csv(pattern, logs_dir)
     if path:
@@ -415,7 +417,11 @@ with tab_eval:
             e2.metric("Std", f"{results['std']:.1f}")
             e3.metric("Max Reward", f"{results['max']:.1f}")
 
-    if "replay_states" in st.session_state:
+    @st.fragment
+    def episode_replay():
+        if "replay_states" not in st.session_state:
+            return
+
         st.divider()
         st.header("Episode Replay")
 
@@ -461,3 +467,5 @@ with tab_eval:
             detail_cols = st.columns(4)
             for col, label, val in zip(detail_cols, labels, s):
                 col.metric(label, f"{val:.4f}")
+
+    episode_replay()
