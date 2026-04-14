@@ -102,6 +102,12 @@ python visualization/plot_wm_error.py
 streamlit run app.py
 ```
 
+The Streamlit app has three tabs:
+
+- **Overview** -- explains the project approach and the three agents being compared.
+- **Run Analysis** -- browse past experiment runs from `runs/`. Shows training learning curves, sample efficiency, world model loss curves, and trajectory/error plots. Supports side-by-side comparison of two runs.
+- **Agent Evaluation** -- load a saved agent (from any run or the best saved model), evaluate it on the real CartPole environment, and replay an episode step by step with an interactive cartpole visualization.
+
 ## Results
 
 ### Learning Curves
